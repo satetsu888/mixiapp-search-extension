@@ -6,5 +6,8 @@
     "permissions": ["contextMenus","clipboardRead", "tabs", "http://*/*", "https://*/*"],
     "background": {
         "page": "background.html"
-    }
+    },
+    "author": "satetsu888",
+    "homepage_url": "https://github.com/satetsu888/mixiapp-search-extension"
+
 }

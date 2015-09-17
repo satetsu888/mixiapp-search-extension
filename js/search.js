@@ -36,7 +36,6 @@ var search = function(searchText, callback){
                 return current.result.content;
             });
             var resultArray = Array.prototype.concat.apply([], nested);
-            console.log(resultArray);
             if(resultArray.length > 0 ){
                 callback("success", resultArray[0]);
             } else {

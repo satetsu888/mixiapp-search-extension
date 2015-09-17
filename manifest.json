@@ -1,7 +1,7 @@
 {
     "name": "mixiapp-search-extension",
     "manifest_version":2,
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "mixiアプリの検索と表示を行います",
     "permissions": ["contextMenus","clipboardRead", "tabs", "http://*/*", "https://*/*"],
     "background": {

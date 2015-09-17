@@ -71,6 +71,8 @@ var copyAppId = function(stat, data){
         document.execCommand("copy");
 
         document.body.removeChild(textArea);
+
+        alert(data.id+" ("+data.name+") をコピーしました");
     } else {
         alert(JSON.stringify(data));
     }

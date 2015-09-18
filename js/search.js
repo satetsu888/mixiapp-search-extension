@@ -83,17 +83,34 @@ var openApp = function(stat, data){
             url: data.url
         });
     } else {
-        alert(JSON.stringify(data));
+        notify(null, stat, JSON.stringify(data));
     }
 };
 
 var copyAppId = function(stat, data){
     if(stat=="success"){
         setClipBoard(data.id);
-        alert(data.id+" ("+data.name+") をコピーしました");
+        notify(data.logo, stat, data.id+" ("+data.name+") をコピーしました");
     } else {
-        alert(JSON.stringify(data));
+        notify(null, stat, JSON.stringify(data));
     }
+
+}
+
+var notify = function(icon, title, message) {
+    if(icon==null){
+        icon = "http://img.mixi.net/img/basic/favicon.ico";
+    }
+
+    chrome.notifications.create(
+        {
+            "type": "basic",
+            "title": title,
+            "message": message,
+            "iconUrl": icon,
+            "isClickable": true
+        }
+    );
 
 }
 

@@ -3,7 +3,7 @@
     "manifest_version":2,
     "version": "0.0.2",
     "description": "mixiアプリの検索と表示を行います",
-    "permissions": ["contextMenus","clipboardRead", "tabs", "http://*/*", "https://*/*"],
+    "permissions": ["contextMenus","clipboardRead", "tabs","notifications", "http://*/*", "https://*/*"],
     "background": {
         "page": "background.html"
     },

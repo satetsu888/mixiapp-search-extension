@@ -12,6 +12,34 @@ var params_for = function(device, searchText){
     }
 };
 
+var setClipBoard = function(text){
+
+    var textArea = document.createElement("textarea");
+    textArea.style.cssText = "position:absolute;left:-100%";
+    document.body.appendChild(textArea);
+    textArea.value = text;
+    textArea.select();
+
+    var result = document.execCommand("copy");
+    document.body.removeChild(textArea);
+
+    return result;
+}
+
+var getClipBoard = function(){
+    var textArea = document.createElement("textarea");
+    textArea.style.cssText = "position:absolute;left:-100%";
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    document.execCommand("paste");
+    var result = textArea.value;
+    document.body.removeChild(textArea);
+
+    return result;
+}
+
+
 var search = function(searchText, callback){
     $.jsonRPC.setup({
         endPoint: 'http://mixi.jp/system/rpc.json',
@@ -61,16 +89,7 @@ var openApp = function(stat, data){
 
 var copyAppId = function(stat, data){
     if(stat=="success"){
-        var textArea = document.createElement("textarea");
-        textArea.style.cssText = "position:absolute;left:-100%";
-        document.body.appendChild(textArea);
-
-        textArea.value = data.id;
-        textArea.select();
-        document.execCommand("copy");
-
-        document.body.removeChild(textArea);
-
+        setClipBoard(data.id);
         alert(data.id+" ("+data.name+") をコピーしました");
     } else {
         alert(JSON.stringify(data));
@@ -78,9 +97,10 @@ var copyAppId = function(stat, data){
 
 }
 
+
 var parent = chrome.contextMenus.create({
     "title": "mixiアプリ",
-    contexts: ["selection"],
+    contexts: ["selection", "page"],
 });
 chrome.contextMenus.create({
     title: "検索して開く",
@@ -96,6 +116,22 @@ chrome.contextMenus.create({
     contexts: ["selection"],
     onclick: function(info, tab) {
         search(info.selectionText, copyAppId);
+    }
+});
+chrome.contextMenus.create({
+    title: "クリップボードから検索して開く",
+    parentId: parent,
+    contexts: ["page"],
+    onclick: function(info, tab) {
+        search(getClipBoard(), openApp);
+    }
+});
+chrome.contextMenus.create({
+    title: "クリップボードから検索してアプリIDをコピー",
+    parentId: parent,
+    contexts: ["page"],
+    onclick: function(info, tab) {
+        search(getClipBoard(), copyAppId);
     }
 });
 
